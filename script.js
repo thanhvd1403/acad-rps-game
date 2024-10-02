@@ -11,52 +11,6 @@ function updateEmojiCounts() {
   document.getElementById("count-emoji3").textContent = emojiCounts["✌️"];
 }
 
-function saveBoard() {
-  const grid = document.getElementById("grid");
-  const boardState = [];
-
-  grid.querySelectorAll(".grid-cell").forEach((cell) => {
-    const emoji = cell.querySelector("span").textContent;
-    const score = cell.querySelector(".score")
-      ? cell.querySelector(".score").textContent
-      : null;
-    boardState.push({ emoji, score });
-  });
-
-  localStorage.setItem("boardState", JSON.stringify(boardState));
-  alert("Board state saved!");
-}
-
-function loadBoard() {
-  const boardState = JSON.parse(localStorage.getItem("boardState"));
-  if (!boardState) {
-    alert("No saved board state found!");
-    return;
-  }
-
-  const rows = Math.ceil(boardState.length / Math.sqrt(boardState.length));
-  const cols = Math.ceil(boardState.length / rows);
-  document.getElementById("rows").value = rows;
-  document.getElementById("cols").value = cols;
-
-  generateBoard(); // Regenerate the board with the new dimensions
-
-  const grid = document.getElementById("grid");
-  boardState.forEach((item, index) => {
-    const cell = grid.children[index];
-    if (cell) {
-      const emoji = cell.querySelector("span");
-      emoji.textContent = item.emoji;
-
-      const score = cell.querySelector(".score");
-      if (score && item.score !== null) {
-        score.textContent = item.score;
-        setScoreColor(score, parseInt(item.score)); // Set score color based on loaded value
-      }
-    }
-  });
-}
-
 function getRandomEmoji() {
   return emojis[Math.floor(Math.random() * emojis.length)];
 }
@@ -121,6 +75,7 @@ function createScoreElement(min, max, excludeZero) {
   return score;
 }
 
+// TODO: Even distributed board
 function generateBoard() {
   const grid = document.getElementById("grid");
   const rows = document.getElementById("rows").value;
@@ -129,17 +84,18 @@ function generateBoard() {
   const maxScore = parseInt(document.getElementById("max-score").value);
   const generateScore = document.getElementById("generate-score").checked;
   const excludeZero = document.getElementById("exclude-zero").checked;
+  const boardType = document.getElementById("board-type").value;
 
-  grid.innerHTML = ""; // Clear previous grid
-  // Reset emoji counts
+  const totalCells = rows * cols;
+
+  // Reset grid and counts
+  grid.innerHTML = "";
+  grid.style.gridTemplateColumns = `repeat(${cols}, 50px)`;
   emojiCounts = {
     "✊": 0,
     "✋": 0,
     "✌️": 0,
   };
-  updateEmojiCounts(); // Update the display for counts
-
-  grid.style.gridTemplateColumns = `repeat(${cols}, 50px)`;
 
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
