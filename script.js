@@ -84,9 +84,9 @@ function generateBoard() {
   const maxScore = parseInt(document.getElementById("max-score").value);
   const generateScore = document.getElementById("generate-score").checked;
   const excludeZero = document.getElementById("exclude-zero").checked;
-  const boardType = document.getElementById("board-type").value;
+  // const boardType = document.getElementById("board-type").value;
 
-  const totalCells = rows * cols;
+  // const totalCells = rows * cols;
 
   // Reset grid and counts
   grid.innerHTML = "";
