@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acad Vòng 4</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Board Generator</h1>
+
+    <p>
+      Hướng dẫn sử dụng: Click vào biểu tượng để thay đổi biểu tượng của ô.
+      Click vào số để thay đổi điểm của ô.
+    </p>
+
+    <div>
+      <label for="rows">Rows:</label>
+      <input type="number" id="rows" value="7" min="1" />
+
+      <label for="cols">Columns:</label>
+      <input type="number" id="cols" value="7" min="1" />
+    </div>
+
+    <div>
+      <label for="min-score">Min Score:</label>
+      <input type="number" id="min-score" value="-3" />
+
+      <label for="max-score">Max Score:</label>
+      <input type="number" id="max-score" value="3" />
+    </div>
+
+    <div>
+      <label for="generate-score">
+        <input type="checkbox" id="generate-score" />
+        Generate Score
+      </label>
+
+      <label for="exclude-zero">
+        <input type="checkbox" id="exclude-zero" />
+        Exclude Zero from Score
+      </label>
+    </div>
+
+    <button onclick="generateBoard()">Generate Board</button>
+
+    <div id="grid" class="grid-container"></div>
+
+    <div id="emoji-counts">
+      <p>
+        ✊: <span id="count-emoji1" class="emoji-count">0</span> ✋:
+        <span id="count-emoji2" class="emoji-count">0</span> ✌️:
+        <span id="count-emoji3" class="emoji-count">0</span>
+      </p>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
